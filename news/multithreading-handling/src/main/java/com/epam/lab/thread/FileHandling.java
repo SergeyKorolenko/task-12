@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class FileHandling implements Runnable {
 
-    private Path path;
+    private final Path path;
 
     public static final String ERROR_PATH = "/repository/epamlab/news/error";
 
@@ -22,11 +22,8 @@ public class FileHandling implements Runnable {
         this.path = path;
     }
 
-
     @Override
     public void run() {
-        System.out.println("Thread is working : " + Thread.currentThread().getName()
-                + " with file : " + path.getFileName());
         try {
             List<String> data = JsonFileReader.readFromFile(path);
             Gson gson = new Gson();

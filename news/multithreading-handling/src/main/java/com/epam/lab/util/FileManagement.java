@@ -7,9 +7,7 @@ import java.nio.file.Path;
 public class FileManagement {
 
     public static void moveFileToDirectory(Path from, Path to) throws IOException {
-        System.out.println("MOVING FILE : " + to.getFileName());
-        Files.move(from, to);
-
+        Files.move(from, to.resolve(from.getFileName()));
     }
 
     public static void deleteFile(Path path) throws IOException {

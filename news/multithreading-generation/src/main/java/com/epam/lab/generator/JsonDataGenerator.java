@@ -2,7 +2,6 @@ package com.epam.lab.generator;
 
 import com.epam.lab.dto.AuthorDto;
 import com.epam.lab.dto.NewsDto;
-import com.epam.lab.model.Author;
 import com.google.gson.Gson;
 import net.andreinc.mockneat.MockNeat;
 
@@ -19,7 +18,6 @@ public class JsonDataGenerator {
     private static final String AUTHOR_NAME = "name";
     private static final String AUTHOR_SURNAME = "surname";
     private static final int DIVIDER = 2;
-    private static final String WRONG_FIELD = "wrongField";
     private static final double RIGHT_WRONG_BORDER_PROBABILITY = 0.2;
 
     public static String generateRightJson() {

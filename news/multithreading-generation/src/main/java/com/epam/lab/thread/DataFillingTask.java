@@ -8,16 +8,30 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.TimerTask;
 
-public class DataFillingThread implements Runnable {
+public class DataFillingTask extends TimerTask {
 
     private final Path path;
     private final int fileCount;
 
     private static final int MIN_COUNT_OF_DATA = 3;
     private static final int MAX_COUNT_OF_DATA = 5;
+    private static long PERIOD_TIME;
 
-    public DataFillingThread(Path path, int fileCount) {
+    static {
+        Properties properties = new Properties();
+        try {
+            properties.load(DataFillingTask.class.getClassLoader().getResourceAsStream("generation.properties"));
+            PERIOD_TIME = Long.parseLong(properties.getProperty("periodTime"));
+        }
+        catch (IOException | NumberFormatException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public DataFillingTask(Path path, int fileCount) {
         this.path = path;
         this.fileCount = fileCount;
     }
@@ -33,7 +47,8 @@ public class DataFillingThread implements Runnable {
                     data.add(JsonDataGenerator.generateJson());
                 }
                 JsonFileWriter.writeToFile(filePath, data);
-            } catch (IOException e) {
+                Thread.sleep(PERIOD_TIME);
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
